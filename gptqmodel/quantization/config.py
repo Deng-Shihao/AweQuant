@@ -1320,6 +1320,21 @@ class QuantizeConfig():
         dict_scale_dtype_to_str(out)
         return out
 
+    def to_transformers_dict(self) -> Dict[str, Any]:
+        """Export quantization config in a Transformers-friendly shape for config.json."""
+        if self.quant_method == METHOD.AWQ:
+            version = self.format.value if isinstance(self.format, FORMAT) else str(self.format)
+            return {
+                "bits": self.bits,
+                "group_size": self.group_size,
+                "modules_to_not_convert": None,
+                "quant_method": METHOD.AWQ.value,
+                "version": version,
+                "zero_point": not self.sym,
+            }
+
+        return self.to_dict()
+
      # TODO FIX ME, g_idx int32 per infeature but infeature count is per module
     def calculate_bits_per_weight(self):
         if self.group_size != -1:

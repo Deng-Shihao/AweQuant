@@ -231,8 +231,8 @@ def ModelWriter(cls):
             )
 
         # --- start config save block ---
-        # Save quantized config
-        config.quantization_config = quantize_config.to_dict()
+        # Keep config.json quantization_config aligned with Transformers loaders.
+        config.quantization_config = quantize_config.to_transformers_dict()
         self.model.config = config
 
         def strip_attention_impl_fields(target: Any) -> Dict[str, Any]:
