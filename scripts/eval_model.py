@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-# SPDX-FileCopyrightText: 2024-2025 ModelCloud.ai
-# SPDX-FileCopyrightText: 2024-2025 gptqmodel contributors
-# SPDX-License-Identifier: Apache-2.0
 """CLI helper to run lm-eval tasks against a GPTQModel checkpoint."""
 
 import argparse
