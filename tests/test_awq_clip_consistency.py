@@ -2,8 +2,8 @@ import torch
 import pytest
 from parameterized import parameterized
 
-from gptqmodel.looper.awq_processor import AWQProcessor
-from gptqmodel.quantization.config import FORMAT, METHOD, QuantizeConfig
+from awequant.looper.awq_processor import AWQProcessor
+from awequant.quantization.config import FORMAT, METHOD, QuantizeConfig
 
 
 class _ClipTestAWQProcessor(AWQProcessor):

@@ -3,8 +3,8 @@ from types import SimpleNamespace
 import pytest
 import torch
 
-import gptqmodel.nn_modules.qlinear.gemm_awq as gemm_awq
-import gptqmodel.nn_modules.qlinear.gemm_awq_triton as gemm_awq_triton
+import awequant.nn_modules.qlinear.gemm_awq as gemm_awq
+import awequant.nn_modules.qlinear.gemm_awq_triton as gemm_awq_triton
 
 
 def _fake_quant_tensors(in_features: int = 32, out_features: int = 8, group_size: int = 32):
@@ -34,12 +34,12 @@ def _patch_backend(monkeypatch, backend: str, calls):
         monkeypatch.setattr(gemm_awq_triton, "awq_dequantize_triton", fake_dequant, raising=False)
         monkeypatch.setattr(gemm_awq_triton, "awq_gemm_triton", fake_gemm, raising=False)
         monkeypatch.setattr(
-            "gptqmodel.quantization.awq.modules.triton.gemm.awq_dequantize_triton",
+            "awequant.quantization.awq.modules.triton.gemm.awq_dequantize_triton",
             fake_dequant,
             raising=False,
         )
         monkeypatch.setattr(
-            "gptqmodel.quantization.awq.modules.triton.gemm.awq_gemm_triton",
+            "awequant.quantization.awq.modules.triton.gemm.awq_gemm_triton",
             fake_gemm,
             raising=False,
         )

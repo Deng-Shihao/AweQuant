@@ -1,5 +1,5 @@
 
-"""Simple pause/resume functionality for GPTQModel quantization.
+"""Simple pause/resume functionality for AweQuant quantization.
 
 Provides thread-safe pause/resume capabilities with keyboard input handling.
 """

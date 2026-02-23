@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""CLI entry point for dequantizing GPTQModel safetensor shards."""
+"""CLI entry point for dequantizing AweQuant safetensor shards."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from typing import Optional
 
 import torch
 
-from gptqmodel.utils.model_dequant import dequantize_model
+from awequant.utils.model_dequant import dequantize_model
 
 
 def _resolve_dtype(name: str) -> torch.dtype:

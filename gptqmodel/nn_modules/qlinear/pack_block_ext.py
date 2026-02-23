@@ -6,7 +6,7 @@ from typing import Tuple
 import torch
 from torch import Tensor
 
-from gptqmodel.utils.cpp import load_pack_block_extension
+from ...utils.cpp import load_pack_block_extension
 
 
 def pack_block_cpu(

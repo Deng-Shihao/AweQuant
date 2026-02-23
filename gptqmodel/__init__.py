@@ -44,7 +44,7 @@ DEVICE_THREAD_POOL = DeviceThreadPool(
     empty_cache_every_n=512,
 )
 
-from .models import GPTQModel, get_best_device
+from .models import AweQuant, GPTQModel, get_best_device
 from .models.auto import ASCII_LOGO
 from .quantization import BaseQuantizeConfig, QuantizeConfig
 from .utils import BACKEND

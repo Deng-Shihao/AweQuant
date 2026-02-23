@@ -1,7 +1,7 @@
 
 from typing import Any, Optional, Tuple
 
-from gptqmodel.quantization.config import FailSafe, FailSafeStrategy
+from ..quantization.config import FailSafe, FailSafeStrategy
 
 
 def normalize_failsafe(

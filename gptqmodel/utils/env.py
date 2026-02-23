@@ -1,5 +1,5 @@
 
-"""Environment variable helpers used across GPTQModel."""
+"""Environment variable helpers used across AweQuant."""
 
 from __future__ import annotations
 

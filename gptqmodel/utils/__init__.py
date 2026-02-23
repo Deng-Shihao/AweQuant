@@ -13,7 +13,7 @@ SERIAL_BG_QUEUE = SerialWorker()
 
 # TODO: datasets is not compatible with free threading
 if has_gil_disabled():
-    log.info("Python GIL is disabled and GPTQModel will auto enable multi-gpu quant acceleration for MoE models plus multi-cpu accelerated packing.")
+    log.info("Python GIL is disabled and AweQuant will auto enable multi-gpu quant acceleration for MoE models plus multi-cpu accelerated packing.")
     from .perplexity import Perplexity
 else:
     if has_gil_control():

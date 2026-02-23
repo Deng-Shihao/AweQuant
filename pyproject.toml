@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "GPTQModel"
+name = "AweQuant"
 dynamic = ["version"]
 description = "AWQ-only LLM model quantization toolkit."
 readme = "README.md"
@@ -55,7 +55,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/ModelCloud/GPTQModel"
+Homepage = "https://github.com/ModelCloud/AweQuant"
 
 [project.optional-dependencies]
 test = [

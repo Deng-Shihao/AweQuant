@@ -1,3 +1,3 @@
-"""Support files for GPTQModel native extensions."""
+"""Support files for AweQuant native extensions."""
 
 __all__ = []

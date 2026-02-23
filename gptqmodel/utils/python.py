@@ -4,7 +4,7 @@ import sys
 
 from packaging.version import Version
 
-from gptqmodel.utils.logger import setup_logger
+from .logger import setup_logger
 
 
 log = setup_logger()

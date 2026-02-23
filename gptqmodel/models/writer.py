@@ -26,7 +26,7 @@ from ..quantization.config import (
     META_FIELD_STATIC_GROUPS,
     META_FIELD_TRUE_SEQUENTIAL,
     META_FIELD_URI,
-    META_QUANTIZER_GPTQMODEL,
+    META_QUANTIZER_AWEQUANT,
     META_VALUE_URI,
 )
 from ..utils.backend import BACKEND
@@ -90,14 +90,14 @@ def ModelWriter(cls):
         pre_quantized_size_mb = get_model_files_size(self.model_local_path)
         pre_quantized_size_gb = pre_quantized_size_mb / 1024
 
-        quantizers = [f"{META_QUANTIZER_GPTQMODEL}:{__version__}"]
+        quantizers = [f"{META_QUANTIZER_AWEQUANT}:{__version__}"]
         if meta_quantizer:
             if len(meta_quantizer.split(":")) == 2:
                 quantizers.append(meta_quantizer.replace(" ",""))
             else:
                 log.warn(f"meta_quantizer: '{meta_quantizer}' format is invalid, expected: 'quantizer_name:version'")
 
-        # write gptqmodel tooling fingerprint to config
+        # write AweQuant tooling fingerprint to config
         self.quantize_config.meta_set_versionable(
             key=META_FIELD_QUANTIZER,
             value=quantizers

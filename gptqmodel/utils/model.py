@@ -380,7 +380,7 @@ def create_quant_module(
             tmp_sym = overrides.get("sym", sym)
             tmp_pack_dtype = overrides.get("pack_dtype", pack_dtype)
 
-    # when loading a quantized model, device is target device passed in GPTQModel.load()
+    # when loading a quantized model, device is target device passed in AweQuant.load()
     # check in_features and out_features validate
     _, err = linear_cls.validate(
         bits=tmp_bits,
@@ -874,7 +874,7 @@ def _split_parameter_path(full_name: str) -> Tuple[str, str]:
 def _generate_offload_search_paths(offload_root, module_path):
     """
     Generate fallback paths:
-    'a.b.c' -> ['gptqmodel_offload/a.b.c', 'gptqmodel_offload/a.b', 'gptqmodel_offload/a', 'gptqmodel_offload/']
+    'a.b.c' -> ['awequant_offload/a.b.c', 'awequant_offload/a.b', 'awequant_offload/a', 'awequant_offload/']
     """
     if not module_path:
         return [offload_root]

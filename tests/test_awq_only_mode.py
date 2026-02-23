@@ -1,7 +1,7 @@
 import pytest
 
-from gptqmodel.models.auto import GPTQModel
-from gptqmodel.quantization.config import FORMAT, METHOD, QuantizeConfig
+from awequant.models.auto import AweQuant, GPTQModel
+from awequant.quantization.config import FORMAT, METHOD, QuantizeConfig
 
 
 def test_quantize_config_defaults_to_awq():
@@ -28,10 +28,14 @@ def test_from_quant_config_rejects_non_awq():
 
 def test_awq_only_disables_eval_export_and_hub_helpers():
     with pytest.raises(NotImplementedError, match="AWQ-only"):
-        GPTQModel.eval()
+        AweQuant.eval()
 
     with pytest.raises(NotImplementedError, match="AWQ-only"):
-        GPTQModel.export("model", "out", "hf")
+        AweQuant.export("model", "out", "hf")
 
     with pytest.raises(NotImplementedError, match="AWQ-only"):
-        GPTQModel.push_to_hub("repo", "path")
+        AweQuant.push_to_hub("repo", "path")
+
+
+def test_legacy_class_name_is_compatible_alias():
+    assert GPTQModel is AweQuant

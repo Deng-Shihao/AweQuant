@@ -24,7 +24,7 @@ QUANT_METHOD_FIELD = "quant_method"
 PACK_DTYPE_FIELD = "pack_dtype"
 QUANT_CONFIG_FILENAME = "quantize_config.json"
 QUANT_CONFIG_FILENAME_COMPAT = [QUANT_CONFIG_FILENAME, "quant_config.json", "config.json"]
-# This is AwqBackendPackingMethod, not GPTQModel.BACKEND.
+# This is AwqBackendPackingMethod, not AweQuant.BACKEND.
 # It's used to distinguish between quantization by llm-awq and autoawq; llm-awq actually uses GEMV_FAST for packing.
 AWQ_PACKING_BACKEND_FIELD = "backend"
 
@@ -32,10 +32,12 @@ META_FIELD = "meta"
 # quantizer is the tool that did the quantization
 META_FIELD_QUANTIZER = "quantizer"
 
+META_QUANTIZER_AWEQUANT = "awequant"
 META_QUANTIZER_GPTQMODEL = "gptqmodel"
 
 META_FIELD_URI = "uri"
-META_VALUE_URI = "https://github.com/modelcloud/gptqmodel"
+META_VALUE_URI = "https://github.com/ModelCloud/AweQuant"
+META_VALUE_URI_LEGACY = "https://github.com/modelcloud/gptqmodel"
 
 META_FIELD_DAMP_PERCENT = "damp_percent"
 META_FIELD_DAMP_AUTO_INCREMENT = "damp_auto_increment"
@@ -810,7 +812,7 @@ class QuantizeConfig():
 
         if self.offload_to_disk and not self.offload_to_disk_path:
             path_key = f"{get_random_string()}-{get_random_string()}"
-            self.offload_to_disk_path = f"./gptqmodel_offload/{path_key}/"
+            self.offload_to_disk_path = f"./awequant_offload/{path_key}/"
             log.info(f"QuantizeConfig: offload_to_disk_path auto set to `{self.offload_to_disk_path}`")
 
         if isinstance(self.vram_strategy, str):

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""CLI helper to run lm-eval tasks against a GPTQModel checkpoint."""
+"""CLI helper to run lm-eval tasks against an AweQuant checkpoint."""
 
 import argparse
 import json
@@ -8,11 +8,11 @@ import sys
 from pathlib import Path
 from typing import Dict, Iterable, List, Tuple
 
-import gptqmodel
+import awequant
 from tabulate import tabulate
-from gptqmodel import GPTQModel
-from gptqmodel.models.base import BaseQModel
-from gptqmodel.utils.eval import EVAL
+from awequant import AweQuant
+from awequant.models.base import BaseQModel
+from awequant.utils.eval import EVAL
 
 
 if sys.platform == "darwin":
@@ -29,11 +29,11 @@ DEFAULT_TASKS = (EVAL.LM_EVAL.ARC_CHALLENGE,)
 DEFAULT_TASK_MANAGER_PATH = Path(__file__).resolve().parent.parent / "tests" / "tasks"
 
 
-def _available_backends() -> Dict[str, gptqmodel.BACKEND]:
-    return {member.name.lower(): member for member in gptqmodel.BACKEND}
+def _available_backends() -> Dict[str, awequant.BACKEND]:
+    return {member.name.lower(): member for member in awequant.BACKEND}
 
 
-def _parse_backend(value: str) -> gptqmodel.BACKEND:
+def _parse_backend(value: str) -> awequant.BACKEND:
     lookup = _available_backends()
     key = value.strip().lower()
     if key not in lookup:
@@ -131,14 +131,14 @@ def _split_tasks(arg_value: str | None) -> List[str]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run lm-eval tasks against a quantized model loaded via gptqmodel."
+        description="Run lm-eval tasks against a quantized model loaded via awequant."
     )
     parser.add_argument("--model", required=True, help="Model path or Hugging Face repo id.")
     parser.add_argument(
         "--backend",
         default="auto",
         type=_parse_backend,
-        help="Inference backend to use when loading with gptqmodel.load.",
+        help="Inference backend to use when loading with awequant.load.",
     )
     parser.add_argument(
         "--tasks",
@@ -159,7 +159,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--dtype",
         default="auto",
-        help="dtype override forwarded to gptqmodel.load (default: auto).",
+        help="dtype override forwarded to awequant.load (default: auto).",
     )
     parser.add_argument(
         "--gen-kwargs",
@@ -171,14 +171,14 @@ def parse_args() -> argparse.Namespace:
         action="append",
         default=[],
         metavar="KEY=VALUE",
-        help="Extra model_args forwarded to GPTQModel.eval (repeatable).",
+        help="Extra model_args forwarded to AweQuant.eval (repeatable).",
     )
     parser.add_argument(
         "--load-arg",
         action="append",
         default=[],
         metavar="KEY=VALUE",
-        help="Additional keyword arguments passed to gptqmodel.load (repeatable).",
+        help="Additional keyword arguments passed to awequant.load (repeatable).",
     )
     parser.add_argument(
         "--trust-remote-code",
@@ -188,7 +188,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--use-vllm",
         action="store_true",
-        help="Run evaluation with the vLLM backend instead of the default gptqmodel harness.",
+        help="Run evaluation with the vLLM backend instead of the default awequant harness.",
     )
     parser.add_argument(
         "--max-model-len",
@@ -244,11 +244,12 @@ def main() -> None:
         raise ValueError("No lm-eval tasks specified.")
     chat_template_tasks = {_resolve_task(name).value for name in _split_tasks(args.chat_template_tasks)}
 
+    # Keep legacy backend id for compatibility with existing eval wrappers.
     llm_backend = "vllm" if args.use_vllm else "gptqmodel"
-    backend: gptqmodel.BACKEND = args.backend
+    backend: awequant.BACKEND = args.backend
 
     load_kwargs = _parse_key_value_pairs(args.load_arg)
-    model = GPTQModel.load(
+    model = AweQuant.load(
         args.model,
         backend=backend,
         trust_remote_code=args.trust_remote_code,
@@ -257,7 +258,7 @@ def main() -> None:
     )
 
     if not isinstance(model, BaseQModel):
-        raise RuntimeError("Failed to load GPTQModel; received unexpected object type.")
+        raise RuntimeError("Failed to load AweQuant; received unexpected object type.")
 
     model_args = _parse_key_value_pairs(args.model_arg)
     if args.max_model_len is not None:
@@ -291,7 +292,7 @@ def main() -> None:
         if not grouped:
             continue
 
-        result = gptqmodel.GPTQModel.eval(
+        result = awequant.AweQuant.eval(
             model_or_id_or_path=model,
             tasks=grouped,
             framework=EVAL.LM_EVAL,

@@ -12,8 +12,8 @@ from parameterized import parameterized
 from pytest import MonkeyPatch
 from torch import nn
 
-from gptqmodel.looper.awq_processor import AWQProcessor
-from gptqmodel.quantization.config import FORMAT, METHOD, QuantizeConfig
+from awequant.looper.awq_processor import AWQProcessor
+from awequant.quantization.config import FORMAT, METHOD, QuantizeConfig
 
 
 QWEN3_HIDDEN_SIZE = 3584

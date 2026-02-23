@@ -2,11 +2,11 @@
 import pytest
 import torch
 
-from gptqmodel.nn_modules.qlinear.torch_awq import AwqTorchQuantLinear
-from gptqmodel.quantization import FORMAT, METHOD
-from gptqmodel.quantization.awq.utils.packing_utils import dequantize_gemm
-from gptqmodel.utils.backend import BACKEND
-from gptqmodel.utils.importer import select_quant_linear
+from awequant.nn_modules.qlinear.torch_awq import AwqTorchQuantLinear
+from awequant.quantization import FORMAT, METHOD
+from awequant.quantization.awq.utils.packing_utils import dequantize_gemm
+from awequant.utils.backend import BACKEND
+from awequant.utils.importer import select_quant_linear
 
 
 def _pack_awq_tensor(unpacked: torch.Tensor, bits: int) -> torch.Tensor:

@@ -18,9 +18,9 @@ from transformers.models.gemma.modeling_gemma import GemmaRMSNorm
 from transformers.models.gemma2.modeling_gemma2 import Gemma2RMSNorm
 from transformers.models.llama.modeling_llama import LlamaRMSNorm
 
-from gptqmodel.quantization.awq.modules.act import ScaledActivation
-from gptqmodel.quantization.awq.utils.module import get_op_by_name, set_op_by_name
-from gptqmodel.quantization.awq.utils.utils import get_best_device
+from ..modules.act import ScaledActivation
+from ..utils.module import get_op_by_name, set_op_by_name
+from ..utils.utils import get_best_device
 
 
 allowed_norms = [nn.LayerNorm, LlamaRMSNorm, GemmaRMSNorm, Gemma2RMSNorm, CohereLayerNorm]

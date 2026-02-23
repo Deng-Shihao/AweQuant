@@ -103,12 +103,12 @@ def check_and_get_model_definition(model_dir, trust_remote_code=False):
 
     return MODEL_MAP[model_type]
 
-class GPTQModel:
+class AweQuant:
     def __init__(self):
         raise EnvironmentError(
-            "GPTQModel is not designed to be instantiated\n"
-            "use `GPTQModel.from_pretrained` to load pretrained model and prepare for quantization via `.quantize()`.\n"
-            "use `GPTQModel.from_quantized` to inference with post-quantized model."
+            "AweQuant is not designed to be instantiated\n"
+            "use `AweQuant.from_pretrained` to load pretrained model and prepare for quantization via `.quantize()`.\n"
+            "use `AweQuant.from_quantized` to inference with post-quantized model."
         )
 
     @classmethod
@@ -132,27 +132,27 @@ class GPTQModel:
         if isinstance(backend, str):
             backend = BACKEND(backend)
 
-        is_gptqmodel_quantized = False
+        is_awequant_quantized = False
         model_cfg = AutoConfig.from_pretrained(model_id_or_path, trust_remote_code=trust_remote_code)
         if _is_supported_quantization_config(model_cfg):
-            # only if the model is quantized or compatible with gptqmodel should we set is_quantized to true
-            is_gptqmodel_quantized = True
+            # only if the model is quantized or compatible with AweQuant should we set is_quantized to true
+            is_awequant_quantized = True
         else:
-            # TODO FIX ME...not decoded to check if quant method is compatible or quantized by gptqmodel
+            # TODO FIX ME...not decoded to check if quant method is compatible or quantized by AweQuant
             for name in [QUANT_CONFIG_FILENAME, "quant_config.json"]:
                 if isdir(model_id_or_path):  # Local
                     if os.path.exists(join(model_id_or_path, name)):
-                        is_gptqmodel_quantized = True
+                        is_awequant_quantized = True
                         break
 
                 else:  # Remote
                     files = list_repo_files(repo_id=model_id_or_path)
                     for f in files:
                         if f == name:
-                            is_gptqmodel_quantized = True
+                            is_awequant_quantized = True
                             break
 
-        if is_gptqmodel_quantized:
+        if is_awequant_quantized:
             m = cls.from_quantized(
                 model_id_or_path=model_id_or_path,
                 device_map=device_map,
@@ -195,7 +195,7 @@ class GPTQModel:
 
         if quantize_config and quantize_config.dynamic:
             log.warn(
-                "GPTQModel's per-module `dynamic` quantization feature is fully supported in latest vLLM and SGLang but not yet available in hf transformers.")
+                "AweQuant's per-module `dynamic` quantization feature is fully supported in latest vLLM and SGLang but not yet available in hf transformers.")
 
         model_definition = check_and_get_model_definition(model_id_or_path, trust_remote_code)
 
@@ -241,3 +241,7 @@ class GPTQModel:
     @staticmethod
     def push_to_hub(*args, **kwargs):
         raise NotImplementedError("AWQ-only quantization build does not include Hub upload helpers.")
+
+
+# Backward-compat alias for legacy public API.
+GPTQModel = AweQuant

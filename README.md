@@ -1,6 +1,7 @@
-# GPTQModel (AWQ-Only)
+# AweQuant (AWQ-Only)
 
 This fork is intentionally simplified to support **AWQ quantization only**.
+Preferred import path is `awequant` (legacy `gptqmodel` imports remain compatible).
 
 ## Scope
 
@@ -18,8 +19,8 @@ uv pip install -v . --no-build-isolation
 
 ```python
 from datasets import load_dataset
-from gptqmodel import GPTQModel, QuantizeConfig
-from gptqmodel.quantization import FORMAT, METHOD
+from awequant import AweQuant, QuantizeConfig
+from awequant.quantization import FORMAT, METHOD
 
 model_id = "Qwen/Qwen3-4B"
 quant_path = "./quantized_models/Qwen3-4B-awq-4bit"
@@ -38,7 +39,7 @@ quant_config = QuantizeConfig(
     sym=False,
 )
 
-model = GPTQModel.load(model_id, quantize_config=quant_config)
+model = AweQuant.load(model_id, quantize_config=quant_config)
 model.quantize(calibration_dataset, batch_size=2)
 model.save(quant_path)
 ```
