@@ -7,7 +7,6 @@ Import path: `awequant`.
 
 - Supported quantization method: `METHOD.AWQ`
 - Supported checkpoint formats: `FORMAT.GEMM`, `FORMAT.GEMV`, `FORMAT.GEMV_FAST`, `FORMAT.LLM_AWQ`
-- Unsupported in this fork: GPTQ, QQQ, GPTAQ, EoRA, vLLM/SGLang/MLX integration extras
 
 ## Install
 
