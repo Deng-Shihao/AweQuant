@@ -575,7 +575,6 @@ dependencies = [
     { name = "pypcre" },
     { name = "safetensors" },
     { name = "threadpoolctl" },
-    { name = "tokenicer" },
     { name = "torch" },
     { name = "transformers" },
 ]
@@ -611,7 +610,6 @@ requires-dist = [
     { name = "ruff", marker = "extra == 'quality'", specifier = "==0.13.0" },
     { name = "safetensors", specifier = ">=0.6.2" },
     { name = "threadpoolctl", specifier = ">=3.6.0" },
-    { name = "tokenicer", specifier = ">=0.0.6" },
     { name = "torch", specifier = ">=2.8.0" },
     { name = "transformers", specifier = ">=4.57.1" },
 ]
@@ -2128,15 +2126,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/b7/4d/08c89e34946fce2ae
 wheels = [
     { url = "https://files.pythonhosted.org/packages/32/d5/f9a850d79b0851d1d4ef6456097579a9005b31fea68726a4ae5f2d82ddd9/threadpoolctl-3.6.0-py3-none-any.whl", hash = "sha256:43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb", size = 18638, upload-time = "2025-03-13T13:49:21.846Z" },
 ]
-
-[[package]]
-name = "tokenicer"
-version = "0.0.6"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "transformers" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/6c/c9/7b1591baf21131bd9efd4f0018ce6a709749d28f50152a44f9ff6d95d668/tokenicer-0.0.6.tar.gz", hash = "sha256:62c0e96cd6bc7c3188cf9ecbb66371647b8e7c930392194f75bf332aa7ae236c", size = 9850, upload-time = "2026-02-09T08:28:07.197Z" }
 
 [[package]]
 name = "tokenizers"

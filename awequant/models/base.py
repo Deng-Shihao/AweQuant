@@ -15,7 +15,6 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Type, Union
 import torch
 import torch._dynamo
 import torch.nn as nn
-from tokenicer import Tokenicer
 from transformers import (
     AutoModelForCausalLM,
     AutoProcessor,
@@ -260,11 +259,11 @@ class BaseQModel(nn.Module):
 
         if tokenizer is not None:
             if isinstance(tokenizer, PreTrainedTokenizerBase):
-                self.tokenizer = Tokenicer.load(tokenizer, trust_remote_code=trust_remote_code)
+                self.tokenizer = tokenizer
             else:
                 raise ValueError(
                     f"Unsupported `tokenizer` type: Expected `PreTrainedTokenizerBase`, actual = `{type(tokenizer)}`.")
-            self.model.tokenizer = self.tokenizer.tokenizer # helpful for CI tests
+            self.model.tokenizer = self.tokenizer # helpful for CI tests
         else:
             self.tokenizer = tokenizer # TODO none?
             self.model.tokenizer = tokenizer # helpful for CI tests # TODO none?
@@ -666,8 +665,7 @@ class BaseQModel(nn.Module):
         # Use the provided tokenizer if one is passed to quantize()
         if tokenizer is not None:
             if isinstance(tokenizer, PreTrainedTokenizerBase):
-                # TODO FIX ME...this is a bug
-                self.tokenizer = Tokenicer.load(tokenizer, trust_remote_code=self.trust_remote_code)
+                self.tokenizer = tokenizer
             else:
                 raise ValueError(
                     f"Unsupported `tokenizer` type: Expected `PreTrainedTokenizerBase`, actual = `{type(tokenizer)}`.")
